@@ -1,0 +1,5 @@
+1.@Controller和@RequestMapping及其他的一些注解，共同构成了Spring MVC框架的基本实现
+2.RequestMapping(path = "/{day}", method = RequestMethod.GET)
+    public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day, Model model) {
+        return appointmentBook.getAppointmentsForDay(day);
+    }

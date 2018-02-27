@@ -1,0 +1,13 @@
+/*Set<String> supermanSet=new HashSet<>();
+        supermanSet.add("zzz");
+        Mockito.when(supermanService.get()).thenReturn(supermanSet);*/
+        //Mockito.when(emplManagerController.isSuperman("zzzz")).thenReturn(false);
+
+
+
+        /*String key="q1";
+        String content = emplWelcomePath + "?code=" + key;
+        Optional<BpQrCode> bpQrCode=Optional.of(qr());
+       Mockito.when(cacheHelper.get(key,24 * 60 * 60,
+                ()->bpQrCode.filter(qr -> key.equals(qr.getQrcode())).map(qr -> doBase64Img(content)).get()))
+                .thenReturn("eriuhgioewhg12");*/

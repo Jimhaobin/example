@@ -1,0 +1,125 @@
+mock(List.class)根据接口测试创建对象
+verify（mocklist）.add("one")验证方式是否被调用了一次
+when().thenReturn()
+when().thenthrow()
+参数匹配
+anyInt（）
+argThat(isValid())有效参数
+
+dothrow（new RuntimeException()）.when(mocklist).clear();
+mockMethod()自定义不同结果
+
+when(mock.someMethod(anyString())).thenAnswer(new Answer() {
+    Object answer(InvocationOnMock invocation) {
+        Object[] args = invocation.getArguments();
+        Object mock = invocation.getMock();
+        return "called with arguments: " + args;
+    }
+});
+//the following prints "called with arguments: foo"
+System.out.println(mock.someMethod("foo"));
+
+可以通过doThrow(), doAnswer(), doNothing(), doReturn() and doCallRealMethod() 来自定义函数操作。
+junit测试
+
+几个规范点
+	(1). 测试方法必须使用@Test注解，并且方法必须是public void，不能带任何参数；
+	(2). 新建一个Source Folder来存放测试代码，但是测试类的包名和被测试类的必须保持一致；
+	(3). 测试单元中的每个方法必须可以独立，测试方法之间不能有任何的依赖；
+	(4). 测试类最好使用Test作为类名的后缀，测试方法最好使用test作为方法名的前缀
+
+
+
+-----------------------------------------------------------------------
+mockMVC
+1.注解：
+RunWith(SpringJUnit4ClassRunner.class): 表示使用Spring Test组件进行单元测试;
+WebAppConfiguration: 使用这个Annotate会在跑单元测试的时候真实的启动一个web服务，然后开始调用Controller的Rest API，待单元测试跑完之后再将web服务停掉;
+ContextConfiguration: 指定Bean的配置文件信息，可以有多种方式，这个例子使用的是文件路径形式，如果有多个配置文件，可以将括号中的信息配置为一个字符串数组来表示;controller，component等都是使用注解，需要注解指定spring的配置文件，扫描相应的配置，将类初始化等。
+TransactionConfiguration(transactionManager="transactionManager",defaultRollback=true)配置事务的回滚,对数据库的增删改都会回滚,便于测试用例的循环利用
+
+2.例子：
+2.1.mockMvc.perform(get("/demo/test").accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+               .andExpect(status().isOk())
+               .andExpect(content().contentType("application/json;charset=UTF-8"))
+               .andExpect(content().json("{'foo':'bar'}"));
+
+
+perform，调用controller的业务逻辑
+accept的客户端能接受的内容类型
+contentType的发送的内容类型
+json（）json串
+
+     perform：执行一个RequestBuilder请求，会自动执行SpringMVC的流程并映射到相应的控制器执行处理；  
+     get:声明发送一个get请求的方法。MockHttpServletRequestBuilder get(String urlTemplate, Object... urlVariables)：根据uri模板<span style="white-space:pre;">      </span>和uri变量值得到一个GET请求方式的。另外提供了其他的请求的方法，如：post、put、delete等。  
+     param：添加request的参数，如上面发送请求的时候带上了了pcode = root的参数。假如使用需要发送json数据格式的时将不能使用这种<span style="white-space:pre;">        </span>方式，可见后面被@ResponseBody注解参数的解决方法  
+      andExpect：添加ResultMatcher验证规则，验证控制器执行完成后结果是否正确（对返回的数据进行的判断）；  
+      andDo：添加ResultHandler结果处理器，比如调试时打印结果到控制台（对返回的数据进行的判断）；  
+      andReturn：最后返回相应的MvcResult；然后进行自定义验证/进行下一步的异步处理（对返回的数据进行的判断）  
+      @throws Exception  
+
+
+ 2.2 this.mockMvc.perform(get("/home")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Hello World")))
+                .andDo(document("home"));
+
+
+                MockMvc mockMvc = webAppContextSetup(wac).build();
+
+ mockMvc.perform(get("/form"))
+     .andExpect(status().isOk())
+     .andExpect(content().mimeType("text/html"))
+     .andExpect(forwardedUrl("/WEB-INF/layouts/main.jsp"));
+     
+                andExpect():返回结果中包含helloworld字符串，判断控制的结果，例如状态，包含字符串，mime类型，重定向
+				A ResultMatcher matches the result of an executed request against some expectation.
+				mockMvc.perform(get("/person/1"))
+	  .andExpect(status().isOk())
+	  .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+	  .andExpect(jsonPath("$.person.name").value("Jason"));
+	
+	    mockMvc.perform(post("/form"))
+	   .andExpect(status().isOk())
+	   .andExpect(redirectedUrl("/person/1"))
+	   .andExpect(model().size(1))
+	   .andExpect(model().attributeExists("person"))
+	   .andExpect(flash().attributeCount(1))
+	   .andExpect(flash().attribute("message", "success!"));
+				
+                perform（）可以设置发送的内容类型，接受的内容类型，参数，请求路径，内容
+				Perform a request and return a type that allows chaining further actions, such as 					asserting expectations, on the result.
+				public ResultActions perform(RequestBuilder requestBuilder)
+                      throws java.lang.Exception
+				Perform a request and return a type that allows chaining further actions, such as 					asserting expectations, on the result.
+				Parameters:
+				requestBuilder - used to prepare the request to execute; see static factory methods 				in MockMvcRequestBuilders
+				Returns:
+				an instance of ResultActions; never null
+				Throws:
+				java.lang.Exception
+				See Also:
+				MockMvcRequestBuilders, MockMvcResultMatchers
+                andDo()打印响应类型
+
+                andReturn（）
+
+perform：执行一个RequestBuilder请求，会自动执行SpringMVC的流程并映射到相应的控制器执行处理；
+andExpect：添加ResultMatcher验证规则，验证控制器执行完成后结果是否正确；
+andDo：添加ResultHandler结果处理器，比如调试时打印结果到控制台；
+andReturn：最后返回相应的MvcResult；然后进行自定义验证/进行下一步的异步处理；
+
+andDo(print())
+打印的内容
+MockHttpServletRequest
+MockHttpServletResponse
+handler
+Async
+ModelAndView
+
+
+3.Assert
+java.lang.Object
+  extended by org.junit.Assert
+  assertEquals(XXX,XX);
+  assertNotNull();
+

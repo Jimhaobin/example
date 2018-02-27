@@ -1,0 +1,8 @@
+Google Analytics是著名互联网公司Google为网站提供的数据统计服务
+SWFObject是一个用于在HTML中方便插入Adobe Flash媒体资源（*.swf文件）的独立、敏捷的JavaScript模块。该模块中的JavaScript脚本能够自动检测PC、Mac机器上各种主流浏览器对Flash插件的支持情况。它使得插入Flash媒体资源尽量简捷、安全。而且它是非常符合搜索引擎优化的原则的。此外，它能够避免您的 HTML、XHTML中出现object、embed等非标准标签，从而符合更加标准。
+WordPress是使用PHP语言开发的博客平台，用户可以在支持PHP和MySQL数据库的服务器上架设属于自己的网站。也可以把 WordPress当作一个内容管理系统（CMS）来使用。
+Lightbox的效果类似于WinXP操作系统的注销/关机对话框，除去屏幕中心位置的对话框，其他的区域都以淡出的效果逐渐变为银灰色以增加对比度，此时除了对话框内的表单控件，没有其他区域可以获取焦点。
+momentjs
+Tengine是由淘宝网发起的Web服务器项目。它在Nginx的基础上，针对大访问量网站的需求，添加了很多高级功能和特性。它的目的是打造一个高效、安全的Web平台
+
+Google AdSense是一个快速简便的网上赚钱方法，可以让具有一定访问量规模的网站发布商为他们的网站展示与网站内容相关的 Google广告并将网站流量转化为收入。

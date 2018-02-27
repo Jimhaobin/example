@@ -1,0 +1,10 @@
+登录验证，判断用户是否登录。
+权限验证，判断用户是否有权限访问资源。
+日志记录，记录请求日志，以便统计请求访问量。
+处理cookie、本地化、国际化、主题等。
+性能监控，监控请求处理时长等。
+HandlerInterceptor
+
+配置的拦截器，必须实现 org.springframework.web.servlet包下的 HandlerInterceptor接口。这个接口定义了三个方法： preHandle(..)，它在处理器实际执行 之前 会被执行； postHandle(..)，它在处理器执行 完毕 以后被执行； afterCompletion(..)，它在 整个请求处理完成 之后被执行。
+
+preHandle(..)可以通过这个方法来决定是否继续执行处理链中的部件。当方法返回 true时，处理器链会继续执行；若方法返回 false， DispatcherServlet即认为拦截器自身已经完成了对请求的处理（比如说，已经渲染了一个合适的视图），那么其余的拦截器以及执行链中的其他处理器就不会再被执行了。

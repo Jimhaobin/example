@@ -1,0 +1,41 @@
+如果你想指定使用哪个特定的bean，你可以在web应用上下文WebApplicationContext中简单地配置它们
+
+@Controller和@RequestMapping及其他的一些注解，共同构成了Spring MVC框架的基本实现
+	uri模板映射请求路径
+	带正则表达式的URI模板
+	路径样式匹配
+	矩阵URI
+	可消费的媒体类型
+	可生产的媒体类型
+	请求参数与请求头的值
+你可以筛选请求参数的条件来缩小请求匹配范围，比如"myParam"、"!myParam"及"myParam=myValue"等。
+
+编码属性（enctype="multipart/form-data"）能让浏览器知道如何对多路上传请求的表单进行编码（encode
+
+有两个接口在Spring处理视图相关事宜时至关重要，分别是视图解析器接口ViewResolver和视图接口本身View。视图解析器ViewResolver负责处理视图名与实际视图之间的映射关系。视图接口View负责准备请求，并将请求的渲染交给某种具体的视图技术实现
+
+如果需要在应用中使用多种不同的视图技术，你可以使用ResourceBundleViewResolver
+
+
+XmlViewResolver，它用来指定Excel视图
+
+可以通过把多个视图解析器设置到应用上下文(application context)中的方式来串联它们。如果需要指定它们的次序，那么设置order属性即可
+
+定制ThemeSource
+
+DispatcherServlet会查找一个名称为themeResolver的bean以确定使用哪个ThemeResolver的实现
+
+Spring的处理器异常解析器HandlerExceptionResolver接口的实现负责处理各类控制器执行过程中出现的异常。
+
+实现HandlerExceptionResolver接口并非实现异常处理的唯一方式，它只是提供了resolveException(Exception, Hanlder)方法的一个实现而已，方法会返回一个ModelAndView。除此之外，你还可以框架提供的SimpleMappingExceptionResolver或在异常处理方法上注解@ExceptionHandler。SimpleMappingExceptionResolver允许你获取可能抛出的异常类的名字，并把它映射到一个视图名上去。这与Servlet API提供的异常映射特性是功能等价的，但你也可以基于此实现粒度更精细的异常映射。而@ExceptionHandler注解的方法则会在异常抛出时被调用以处理该异常。这样的方法可以定义在@Controller注解的控制器类里，也可以定义在@ControllerAdvice类中，后者可以使该异常处理方法被应用到更多的@Controller控制器中。下一小节将提供更为详细的信息
+
+
+你可以在web应用上下文WebApplicationContext中简单地配置它们
+
+
+首先，搜索应用的上下文对象WebApplicationContext并把它作为一个属性（attribute）绑定到该请求上，以便控制器和其他组件能够使用它。属性的键名默认为DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE
+将地区（locale）解析器绑定到请求上，以便其他组件在处理请求（渲染视图、准备数据等）时可以获取区域相关的信息。如果你的应用不需要解析区域相关的信息，忽略它即可
+将主题（theme）解析器绑定到请求上，以便其他组件（比如视图等）能够了解要渲染哪个主题文件。同样，如果你不需要使用主题相关的特性，忽略它即可
+如果你配置了multipart文件处理器，那么框架将查找该文件是不是multipart（分为多个部分连续上传）的。若是，则将该请求包装成一个MultipartHttpServletRequest对象，以便处理链中的其他组件对它做进一步的处理。关于Spring对multipart文件传输处理的支持，读者可以参考21.10 Spring的multipart（文件上传）支持一小节
+为该请求查找一个合适的处理器。如果可以找到对应的处理器，则与该处理器关联的整条执行链（前处理器、后处理器、控制器等）都会被执行，以完成相应模型的准备或视图的渲染
+如果处理器返回的是一个模型（model），那么框架将渲染相应的视图。若没有返回任何模型（可能是因为前后的处理器出于某些原因拦截了请求等，比如，安全问题），则框架不会渲染任何视图，此时认为对请求的处理可能已经由处理链完成了

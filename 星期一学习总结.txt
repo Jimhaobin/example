@@ -1,0 +1,6 @@
+1.springmvc的简介：围绕dispacherServlet设计的请求处理程序，具有分发请求映射，视图解析，主题解析，文件上传功能，默认处理器是基于@Controller和@RequestMapping,通过@PathVaribale实现RESTful请求
+2.spring和springmvc设计原则是开发扩展，关闭修改
+3.其他MVC实现可插入性，可以替换spring的webmvc
+4.DispatcherServlet 	驱动请求，围绕servlet这几
+
+ 

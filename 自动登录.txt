@@ -1,0 +1,25 @@
+String sign = "true";
+
+      if (sign.equals(rename)) {
+        Cookie cookie = new Cookie("rename", URLEncoder.encode(username, "utf-8"));
+        cookie.setMaxAge(3600 * 24 * 30);
+        cookie.setPath(request.getContextPath() + "/");
+        response.addCookie(cookie);
+      } else {
+        // 取消记住用户名
+        Cookie cookie = new Cookie("rename", "");
+        cookie.setMaxAge(0);
+        cookie.setPath(request.getContextPath() + "/");
+        response.addCookie(cookie);
+      }
+      // 将User对象保存到session中作为登陆的标识
+      request.getSession().setAttribute("user", user);
+      // 30天自动的登录的cookie处理
+      if (sign.equals(autoLogin)) {
+        Cookie autoLoginCookie =
+            new Cookie("autoLogin", URLEncoder.encode(username + ":" + password, "UTF-8"));
+        autoLoginCookie.setPath("/");
+        autoLoginCookie.setMaxAge(30 * 24 * 3600);
+        response.addCookie(autoLoginCookie);
+      }
+      System.out.println("1111" + autoLogin + "//" + rename);

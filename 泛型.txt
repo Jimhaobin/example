@@ -1,0 +1,15 @@
+return cacheHelper.getByLock(cacheKey + dictType, expireTime, new Supplier<List<String>>() {
+            @Override
+            public List<String> get() {
+                if (StringUtils.isNotBlank(dictType)) {
+                    List<DictDataVo> list = ehrClient.findDictByType(dictType);
+                    return toDictList(list);
+                } else {
+                    return Collections.emptyList();
+                }
+            }
+        });
+
+
+
+        import com.jd.common.cache.Supplier;
